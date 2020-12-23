@@ -5,8 +5,8 @@ use tokio::io::{self, AsyncReadExt};
 async fn main() -> io::Result<()> {
     let mut f = File::open("foo.txt").await?;
     // read up to 10 bytes
-    let mut buffer = [0; 10];
-    let n = f.read(&mut buffer[..]).await?;
+    let mut buffer = Vec::new();
+    let n = f.read_to_end(&mut buffer).await?;
 
     println!("The bytes: {:?}", &buffer[..n]);
     Ok(())
